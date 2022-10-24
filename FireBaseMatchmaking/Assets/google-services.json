@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "209994611053",
+    "firebase_url": "https://fir-matchmakingjr-default-rtdb.firebaseio.com",
+    "project_id": "fir-matchmakingjr",
+    "storage_bucket": "fir-matchmakingjr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:209994611053:android:f601d62856ff83962f4264",
+        "android_client_info": {
+          "package_name": "com.SID.firebaseFriendApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "209994611053-abkqb30qec5h6cge25bip0d5tfuaeh9e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUdwclXMNNgZRhkHqz4ALa6Sauam6M3b8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "209994611053-abkqb30qec5h6cge25bip0d5tfuaeh9e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
