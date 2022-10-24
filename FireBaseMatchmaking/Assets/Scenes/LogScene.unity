@@ -1695,7 +1695,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 525441571}
-  - component: {fileID: 525441570}
   - component: {fileID: 525441572}
   m_Layer: 0
   m_Name: AuthManager
@@ -1704,18 +1703,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &525441570
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 525441569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7242b07df19371044aa5a9bca723e49d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &525441571
 Transform:
   m_ObjectHideFlags: 0

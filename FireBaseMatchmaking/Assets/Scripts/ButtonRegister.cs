@@ -26,11 +26,6 @@ public class ButtonRegister : MonoBehaviour
         _registrationButton.onClick.AddListener(HandleRegistrationButtonClick);
     }
 
-    private void Start()
-    {
-        _registrationButton.onClick.AddListener(HandleRegistrationButtonClick);
-    }
-
     private void HandleRegistrationButtonClick()
     {
         string email = GameObject.Find("RegisterMailField").GetComponent<TMP_InputField>().text;

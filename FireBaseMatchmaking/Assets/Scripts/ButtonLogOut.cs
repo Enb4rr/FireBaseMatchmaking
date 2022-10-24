@@ -5,11 +5,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ButtonLogOut : MonoBehaviour
 {
+    [SerializeField]
+    private Button _logOutButton;
+
     DatabaseReference mDatabase;
     string userID;
+
+    private void Reset()
+    {
+        _logOutButton = GetComponent<Button>();
+    }
+
+    private void Awake()
+    {
+        _logOutButton.onClick.AddListener(LogOut);
+    }
 
     private void Start()
     {
@@ -17,15 +31,15 @@ public class ButtonLogOut : MonoBehaviour
         userID = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void LogOut()
     {
-        SetUserOnline();
+        SetUserOffline();
         FirebaseAuth.DefaultInstance.SignOut();
         SceneManager.LoadScene("LogScene");
         Time.timeScale = 1;
     }
 
-    private void SetUserOnline()
+    private void SetUserOffline()
     {
         UserData data = new UserData();
 
