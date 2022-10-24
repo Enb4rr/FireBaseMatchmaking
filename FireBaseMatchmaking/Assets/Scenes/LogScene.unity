@@ -3784,7 +3784,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: AMAZING FRIEND APP
+  m_text: FRIEND APP
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4ec28af262ea1664baa13b1718565f37, type: 2}
   m_sharedMaterial: {fileID: 4092983035631653747, guid: 4ec28af262ea1664baa13b1718565f37, type: 2}
