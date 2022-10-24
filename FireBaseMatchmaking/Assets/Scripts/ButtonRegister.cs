@@ -48,7 +48,7 @@ public class ButtonRegister : MonoBehaviour
         if (registerTask.Exception != null)
         {
             Debug.LogWarning($"Failed to register task {registerTask.Exception}");
-            OnUserRegistrationFailed.Invoke($"Failed to register task {registerTask.Exception}");
+            OnUserRegistrationFailed?.Invoke($"Failed to register task {registerTask.Exception}");
         }
         else
         {

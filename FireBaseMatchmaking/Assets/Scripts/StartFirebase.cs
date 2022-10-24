@@ -1,4 +1,5 @@
 using Firebase;
+using Firebase.Auth;
 using Firebase.Database;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,24 +7,31 @@ using UnityEngine;
 
 public class StartFirebase : MonoBehaviour
 {
-    FirebaseApp app;
+    DependencyStatus status;
+    public FirebaseAuth auth;
+    public FirebaseUser User;
+    public FirebaseDatabase Database;
 
-    private void Start()
+    private void Awake()
     {
-        Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
+        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
+        {
+            status = task.Result;
 
-            var dependencyStatus = task.Result;
-
-            if (dependencyStatus == Firebase.DependencyStatus.Available)
+            if(status == DependencyStatus.Available)
             {
-                app = FirebaseApp.DefaultInstance;
+                InitializeFirebase();
             }
             else
             {
-                UnityEngine.Debug.LogError(System.String.Format(
-                  "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
+                Debug.LogError("Could not resolve all Firebase dependencies:" + status);
             }
-
         });
+    }
+
+    private void InitializeFirebase()
+    {
+        Debug.Log("Setting up Firebase Auth");
+        auth = FirebaseAuth.DefaultInstance;
     }
 }

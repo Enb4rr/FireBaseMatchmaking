@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id">
+  <string name="firebase_database_url" translatable="false">https://fir-matchmakingjr-default-rtdb.firebaseio.com</string>
+  <string name="gcm_defaultSenderId" translatable="false">209994611053</string>
+  <string name="google_storage_bucket" translatable="false">fir-matchmakingjr.appspot.com</string>
+  <string name="project_id" translatable="false">fir-matchmakingjr</string>
+  <string name="google_api_key" translatable="false">AIzaSyCUdwclXMNNgZRhkHqz4ALa6Sauam6M3b8</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCUdwclXMNNgZRhkHqz4ALa6Sauam6M3b8</string>
+  <string name="google_app_id" translatable="false">1:209994611053:android:f601d62856ff83962f4264</string>
+  <string name="default_web_client_id" translatable="false">209994611053-abkqb30qec5h6cge25bip0d5tfuaeh9e.apps.googleusercontent.com</string>
+</resources>
