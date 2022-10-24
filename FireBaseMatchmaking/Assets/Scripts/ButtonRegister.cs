@@ -52,7 +52,6 @@ public class ButtonRegister : MonoBehaviour
             UserData data = new UserData();
 
             data.username = GameObject.Find("RegisterUsernameField").GetComponent<TMP_InputField>().text;
-            data.online = true;
             string json = JsonUtility.ToJson(data);
 
             FirebaseDatabase.DefaultInstance.RootReference.Child("users").Child(registerTask.Result.UserId).SetRawJsonValueAsync(json);

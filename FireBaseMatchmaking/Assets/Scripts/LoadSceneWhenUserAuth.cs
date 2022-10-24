@@ -34,10 +34,9 @@ public class LoadSceneWhenUserAuth : MonoBehaviour
     {
         UserData data = new UserData();
 
-        data.online = false;
         string json = JsonUtility.ToJson(data);
         string userID = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
 
-        mDatabase.Child("users").Child(userID).Child("online").SetValueAsync(true);
+        mDatabase.Child("users-online").Child(userID).Child("username").SetValueAsync(data.username);
     }
 }

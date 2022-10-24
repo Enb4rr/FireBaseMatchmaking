@@ -6,5 +6,8 @@ public class UserData
 {
     public int score;
     public string username;
-    public bool online;
+
+    public string[] friends;
+    public string[] requestSend;
+    public string[] requestReceived;
 }

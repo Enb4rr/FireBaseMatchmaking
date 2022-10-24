@@ -43,9 +43,8 @@ public class ButtonLogOut : MonoBehaviour
     {
         UserData data = new UserData();
 
-        data.online = false;
         string json = JsonUtility.ToJson(data);
 
-        mDatabase.Child("users").Child(userID).Child("online").SetValueAsync(false);
+        mDatabase.Child("users-online").Child(userID).SetValueAsync(null);
     }
 }
