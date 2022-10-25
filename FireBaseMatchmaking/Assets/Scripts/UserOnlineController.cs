@@ -1,7 +1,9 @@
 using Firebase.Auth;
 using Firebase.Database;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UserOnlineController : MonoBehaviour
@@ -10,6 +12,16 @@ public class UserOnlineController : MonoBehaviour
     string UserId;
 
     GameState _GameState;
+
+    [SerializeField]
+    public GameObject friendLabel, addB, acceptB, removeB, rejectB;
+    public Transform userOnlineLabelPos;
+    private TMP_Text friendLabelText;
+
+    [SerializeField]
+    private GameObject mainCanva;
+
+    private List<GameObject> mOnline = new List<GameObject>();
 
     void Start()
     {
@@ -22,10 +34,6 @@ public class UserOnlineController : MonoBehaviour
 
     public void InitUsersOnlineController()
     {
-        //FirebaseDatabase.DefaultInstance.LogLevel = LogLevel.Verbose;
-
-        Debug.Log("Init users online controller");
-
         var userOnlineRef = FirebaseDatabase.DefaultInstance.GetReference("users-online");
 
         mDatabase.Child("users-online").ChildAdded += HandleChildAdded;
@@ -41,7 +49,15 @@ public class UserOnlineController : MonoBehaviour
             return;
         }
         Dictionary<string, object> userConnected = (Dictionary<string, object>)args.Snapshot.Value;
-        Debug.Log(userConnected["username"] + " is online");
+
+        var newLabel = Instantiate(friendLabel, new Vector2(userOnlineLabelPos.position.x, userOnlineLabelPos.position.y), Quaternion.identity);
+        newLabel.transform.parent = mainCanva.transform;
+        friendLabelText = newLabel.GetComponent<TMP_Text>();
+        friendLabelText.text = userConnected["username"].ToString();
+
+        userOnlineLabelPos.position = new Vector2(newLabel.transform.position.x, newLabel.transform.position.y - 90);
+        newLabel.name = userConnected["username"].ToString();
+        mOnline.Add(newLabel);
     }
     private void HandleChildRemoved(object sender, ChildChangedEventArgs args)
     {
@@ -52,6 +68,14 @@ public class UserOnlineController : MonoBehaviour
         }
         Dictionary<string, object> userDisconnected = (Dictionary<string, object>)args.Snapshot.Value;
         Debug.Log(userDisconnected["username"] + " is offline");
+
+        foreach(var label in mOnline)
+        {
+            if(label.name == userDisconnected["username"].ToString())
+            {
+                label.SetActive(false);
+            }
+        }
     }
 
 
