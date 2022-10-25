@@ -20,6 +20,9 @@ public class ButtonLogIn : MonoBehaviour
     DatabaseReference mDatabase;
     string userID;
 
+    [SerializeField]
+    private TMP_Text _alertText;
+
     private void Reset()
     {
         _loginButton = GetComponent<Button>();
@@ -55,7 +58,8 @@ public class ButtonLogIn : MonoBehaviour
 
         if (loginTask.Exception != null)
         {
-            Debug.LogWarning($"Login failed with {loginTask.Exception}");
+            var newAlert = $"Login failed";
+            StartCoroutine(SetAlertText(newAlert));
             OnLogInFailed?.Invoke($"Failed to register task {loginTask.Exception}");
         }
         else
@@ -77,5 +81,15 @@ public class ButtonLogIn : MonoBehaviour
         string userID = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
 
         mDatabase.Child("users-online").Child(userID).Child("username").SetValueAsync(data.username);
+    }
+
+    private IEnumerator SetAlertText(string text)
+    {
+        _alertText.gameObject.SetActive(true);
+        _alertText.text = text;
+
+        yield return new WaitForSeconds(1f);
+
+        _alertText.gameObject.SetActive(false);
     }
 }

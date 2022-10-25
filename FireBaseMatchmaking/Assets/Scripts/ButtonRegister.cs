@@ -16,6 +16,9 @@ public class ButtonRegister : MonoBehaviour
     public event Action<FirebaseUser> OnUserRegistered;
     public event Action<string> OnUserRegistrationFailed;
 
+    [SerializeField]
+    private TMP_Text _alertText;
+
     private void Reset()
     {
         _registrationButton = GetComponent<Button>();
@@ -42,7 +45,8 @@ public class ButtonRegister : MonoBehaviour
 
         if (registerTask.Exception != null)
         {
-            Debug.LogWarning($"Failed to register task {registerTask.Exception}");
+            var newAlert = $"Failed to register";
+            StartCoroutine(SetAlertText(newAlert));
             OnUserRegistrationFailed?.Invoke($"Failed to register task {registerTask.Exception}");
         }
         else
@@ -61,5 +65,15 @@ public class ButtonRegister : MonoBehaviour
         }
 
         _registrationCoroutine = null;
+    }
+
+    private IEnumerator SetAlertText(string text)
+    {
+        _alertText.gameObject.SetActive(true);
+        _alertText.text = text;
+
+        yield return new WaitForSeconds(1f);
+
+        _alertText.gameObject.SetActive(false);
     }
 }
