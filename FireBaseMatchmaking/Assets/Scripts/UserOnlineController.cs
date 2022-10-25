@@ -67,17 +67,15 @@ public class UserOnlineController : MonoBehaviour
             return;
         }
         Dictionary<string, object> userDisconnected = (Dictionary<string, object>)args.Snapshot.Value;
-        Debug.Log(userDisconnected["username"] + " is offline");
 
-        foreach(var label in mOnline)
-        {
-            if(label.name == userDisconnected["username"].ToString())
-            {
-                label.SetActive(false);
-            }
-        }
+        //foreach(GameObject label in mOnline)
+        //{
+        //    if(label.name == userDisconnected["username"].ToString())
+        //    {
+        //        //label.SetActive(false);
+        //    }
+        //}
     }
-
 
     private void HandleValueChanged(object sender, ValueChangedEventArgs args)
     {
@@ -99,6 +97,7 @@ public class UserOnlineController : MonoBehaviour
         }
 
     }
+
     private void SetUserOnline()
     {
         mDatabase.Child("users-online").Child(UserId).Child("username").SetValueAsync(_GameState.username);

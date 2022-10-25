@@ -5,11 +5,15 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class MatchmakingController : MonoBehaviour
 {
     [SerializeField]
     Button matchmakingB, cancelMatchmakingB;
+
+    [SerializeField]
+    TMP_Text matchFoundText;
 
     DatabaseReference mDatabase;
     string UserId;
@@ -20,6 +24,8 @@ public class MatchmakingController : MonoBehaviour
     {
         matchmakingB = GameObject.Find("MatchmakingB").GetComponent<Button>();
         cancelMatchmakingB = GameObject.Find("CancelMatchmakingB ").GetComponent<Button>();
+        cancelMatchmakingB.gameObject.SetActive(false);
+        matchFoundText.gameObject.SetActive(false);
     }
 
     void Start()
@@ -54,6 +60,7 @@ public class MatchmakingController : MonoBehaviour
 
         mDatabase.Child("matchmaking-queue").ChildAdded += HandleChildAdded;
         mDatabase.Child("matchmaking-queue").ChildRemoved += HandleChildRemoved;
+        mDatabase.Child("matchmaking-queue").ValueChanged += HandleValueChanged;
     }
 
     private void HandleChildAdded(object sender, ChildChangedEventArgs args)
@@ -78,7 +85,6 @@ public class MatchmakingController : MonoBehaviour
         Debug.Log(userDisconnectedFromQueue["username"] + " is off the queue");
     }
 
-
     private void HandleValueChanged(object sender, ValueChangedEventArgs args)
     {
         if (args.DatabaseError != null)
@@ -88,12 +94,16 @@ public class MatchmakingController : MonoBehaviour
         }
         Dictionary<string, object> usersList = (Dictionary<string, object>)args.Snapshot.Value;
 
-        if (usersList != null)
+        if (usersList != null && usersList.Count >= 2)
         {
+            SetGameMatch();
+            matchFoundText.gameObject.SetActive(true);
+            matchFoundText.text = "match found with: ";
+
             foreach (var userDoc in usersList)
             {
                 Dictionary<string, object> userOnQueue = (Dictionary<string, object>)userDoc.Value;
-                Debug.Log("ONLINE:" + userOnQueue["username"]);
+                matchFoundText.text += " " + userOnQueue["username"].ToString();
             }
         }
     }
