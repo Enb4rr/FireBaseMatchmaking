@@ -723,6 +723,7 @@ GameObject:
   - component: {fileID: 407844847}
   - component: {fileID: 407844849}
   - component: {fileID: 407844848}
+  - component: {fileID: 407844850}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -778,6 +779,21 @@ MonoBehaviour:
   rejectB: {fileID: 0}
   userOnlineLabelPos: {fileID: 1558027895}
   mainCanva: {fileID: 1752129961}
+--- !u!114 &407844850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407844846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dcb9dd807128e348aa689dd95d1ad1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  matchmakingB: {fileID: 1745526120}
+  cancelMatchmakingB: {fileID: 1936042386}
+  matchFoundText: {fileID: 2044576894}
 --- !u!1 &439724257
 GameObject:
   m_ObjectHideFlags: 0
@@ -2481,7 +2497,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1745526121}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 407844850}
+        m_TargetAssemblyTypeName: MatchmakingController, Assembly-CSharp
+        m_MethodName: InitMatchmaking
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1745526121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3043,7 +3071,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1936042387}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 407844850}
+        m_TargetAssemblyTypeName: MatchmakingController, Assembly-CSharp
+        m_MethodName: CancelMatchmaking
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1936042387
 MonoBehaviour:
   m_ObjectHideFlags: 0

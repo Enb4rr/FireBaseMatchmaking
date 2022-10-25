@@ -20,20 +20,15 @@ public class MatchmakingController : MonoBehaviour
 
     GameState _GameState;
 
-    private void Awake()
-    {
-        matchmakingB = GameObject.Find("MatchmakingB").GetComponent<Button>();
-        cancelMatchmakingB = GameObject.Find("CancelMatchmakingB ").GetComponent<Button>();
-        cancelMatchmakingB.gameObject.SetActive(false);
-        matchFoundText.gameObject.SetActive(false);
-    }
-
     void Start()
     {
         mDatabase = FirebaseDatabase.DefaultInstance.RootReference;
         _GameState = GameObject.Find("Controller").GetComponent<GameState>();
         _GameState.OnDataReady += InitUsersOnMatchmakingController;
         UserId = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
+
+        cancelMatchmakingB.gameObject.SetActive(false);
+        matchFoundText.gameObject.SetActive(false);
     }
 
     public void InitMatchmaking()
@@ -54,8 +49,6 @@ public class MatchmakingController : MonoBehaviour
 
     public void InitUsersOnMatchmakingController()
     {
-        Debug.Log("Init users on matchmaking controller");
-
         var userOnMatchmakingRef = FirebaseDatabase.DefaultInstance.GetReference("matchmaking-queue");
 
         mDatabase.Child("matchmaking-queue").ChildAdded += HandleChildAdded;
