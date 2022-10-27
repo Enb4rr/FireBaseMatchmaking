@@ -129,5 +129,7 @@ public class UserOnlineController : MonoBehaviour
     public void SendData()
     {
         onSendData?.Invoke(currentUsername, currentId);
+
+        Debug.Log("Data sent");
     }
 }
