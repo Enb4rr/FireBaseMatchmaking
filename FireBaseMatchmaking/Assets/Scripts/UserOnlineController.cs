@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UserOnlineController : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class UserOnlineController : MonoBehaviour
     GameState _GameState;
 
     [SerializeField]
-    public GameObject friendLabel, addB, acceptB, removeB, rejectB;
+    public GameObject friendLabel, addB;
     public Transform userOnlineLabelPos;
     private TMP_Text friendLabelText;
 
@@ -23,13 +24,18 @@ public class UserOnlineController : MonoBehaviour
 
     private List<GameObject> mOnline = new List<GameObject>();
 
+    public delegate void OnReceiveData(string id, string username);
+    public event OnReceiveData onSendData;
+
+    private string currentUsername;
+    private string currentId;
+
     void Start()
     {
         mDatabase = FirebaseDatabase.DefaultInstance.RootReference;
         _GameState = GameObject.Find("Controller").GetComponent<GameState>();
         _GameState.OnDataReady += InitUsersOnlineController;
         UserId = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
-
     }
 
     public void InitUsersOnlineController()
@@ -54,6 +60,14 @@ public class UserOnlineController : MonoBehaviour
         newLabel.transform.parent = mainCanva.transform;
         friendLabelText = newLabel.GetComponent<TMP_Text>();
         friendLabelText.text = userConnected["username"].ToString();
+
+        var newAddButton = Instantiate(addB, new Vector2(userOnlineLabelPos.position.x + 250, userOnlineLabelPos.position.y), Quaternion.identity);
+        newAddButton.transform.parent = mainCanva.transform;
+
+        currentUsername = userConnected["username"].ToString();
+        currentId = UserId;
+        Button addButton = newAddButton.GetComponent<Button>();
+        addButton.onClick.AddListener(SendData);
 
         userOnlineLabelPos.position = new Vector2(newLabel.transform.position.x, newLabel.transform.position.y - 90);
         newLabel.name = userConnected["username"].ToString();
@@ -110,5 +124,10 @@ public class UserOnlineController : MonoBehaviour
     void OnApplicationQuit()
     {
         SetUserOffline();
+    }
+
+    public void SendData()
+    {
+        onSendData?.Invoke(currentUsername, currentId);
     }
 }

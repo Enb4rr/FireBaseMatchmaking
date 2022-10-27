@@ -3,12 +3,11 @@ using Firebase.Database;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class FriendListController : MonoBehaviour
+public class RequestManager : MonoBehaviour
 {
     [SerializeField]
-    GameObject acceptB;
+    GameObject acceptB, rejectB, deleteB;
 
     DatabaseReference mDatabase;
     UserOnlineController mUserOnlineController;
@@ -21,21 +20,11 @@ public class FriendListController : MonoBehaviour
         mDatabase = FirebaseDatabase.DefaultInstance.RootReference;
         mUserOnlineController = GameObject.Find("Controller").GetComponent<UserOnlineController>();
         _GameState = GameObject.Find("Controller").GetComponent<GameState>();
-        _GameState.OnDataReady += InitUsersOnFriendController;
+        _GameState.OnDataReady += InitUsersOnMatchmakingController;
         UserId = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
     }
 
-    private void OnEnable()
-    {
-        mUserOnlineController.onSendData += SendRequest;
-    }
-
-    private void OnDisable()
-    {
-        mUserOnlineController.onSendData -= SendRequest;
-    }
-
-    public void InitUsersOnFriendController()
+    public void InitUsersOnMatchmakingController()
     {
         Debug.Log("Init user friendlist");
 
@@ -43,14 +32,7 @@ public class FriendListController : MonoBehaviour
 
         mDatabase.Child("friends").ChildAdded += HandleChildAdded;
         mDatabase.Child("friends").ChildRemoved += HandleChildRemoved;
-    }
-
-    public void InitRequestReceived()
-    {
-        var userRequestList = FirebaseDatabase.DefaultInstance.GetReference("users").Child(UserId).Child("requestReceived");
-
-        mDatabase.Child("requestReceived").ChildAdded += HandleChildAddedRequest;
-        mDatabase.Child("requestReceived").ChildRemoved += HandleChildRemovedRequest;
+        mDatabase.Child("friends").ValueChanged += HandleValueChanged;
     }
 
     private void HandleChildAdded(object sender, ChildChangedEventArgs args)
@@ -75,40 +57,42 @@ public class FriendListController : MonoBehaviour
         Debug.Log(userRemovedFromFriendList["username"] + " was removed from your friendlist");
     }
 
-    private void HandleChildAddedRequest(object sender, ChildChangedEventArgs args)
+
+    private void HandleValueChanged(object sender, ValueChangedEventArgs args)
     {
         if (args.DatabaseError != null)
         {
-            Debug.LogError(args.DatabaseError.Message);
+            Debug.Log(args.DatabaseError.Message);
             return;
         }
-        Dictionary<string, object> userAddedToFriendList = (Dictionary<string, object>)args.Snapshot.Value;
-        Debug.Log(userAddedToFriendList["username"] + " is on your friendlist");
-    }
 
-    private void HandleChildRemovedRequest(object sender, ChildChangedEventArgs args)
-    {
-        if (args.DatabaseError != null)
+        Dictionary<string, object> friendList = (Dictionary<string, object>)args.Snapshot.Value;
+
+        if (friendList != null)
         {
-            Debug.LogError(args.DatabaseError.Message);
-            return;
+            foreach (var userDoc in friendList)
+            {
+                Dictionary<string, object> userOnFriendList = (Dictionary<string, object>)userDoc.Value;
+                Debug.Log("FRIEND:" + userOnFriendList["username"]);
+            }
         }
-        Dictionary<string, object> userRemovedFromFriendList = (Dictionary<string, object>)args.Snapshot.Value;
-        Debug.Log(userRemovedFromFriendList["username"] + " was removed from your friendlist");
     }
 
-    private void SendRequest(string id, string username)
+    private void AddFriend()
     {
-        mDatabase.Child("users").Child(id).Child("requestSend").SetValueAsync(_GameState.username);
+        mDatabase.Child("users").Child(UserId).Child("friends").SetValueAsync(_GameState.username);
     }
 
-    private void ReceiveRequest(string username)
+    private void RemoveFriend()
     {
-        mDatabase.Child("users").Child(UserId).Child("requestReceived").SetValueAsync(username);
+        mDatabase.Child("users").Child(UserId).SetValueAsync(null);
     }
 
-    private void AcceptRequest(string username)
+    private void SendRequest()
     {
-        mDatabase.Child("users").Child(UserId).Child("friends").SetValueAsync(username);
+    }
+
+    private void RejectRequest()
+    {
     }
 }
