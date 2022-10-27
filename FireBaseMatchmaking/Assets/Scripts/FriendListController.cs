@@ -16,11 +16,15 @@ public class FriendListController : MonoBehaviour
 
     GameState _GameState;
 
-    void Start()
+    private void Awake()
     {
-        mDatabase = FirebaseDatabase.DefaultInstance.RootReference;
         mUserOnlineController = GameObject.Find("Controller").GetComponent<UserOnlineController>();
         _GameState = GameObject.Find("Controller").GetComponent<GameState>();
+    }
+
+    private void Start()
+    {
+        mDatabase = FirebaseDatabase.DefaultInstance.RootReference;
         _GameState.OnDataReady += InitUsersOnFriendController;
         _GameState.OnDataReady += InitRequestReceived;
         UserId = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
