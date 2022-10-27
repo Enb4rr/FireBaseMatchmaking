@@ -27,8 +27,8 @@ public class UserOnlineController : MonoBehaviour
     public delegate void OnReceiveData(string id, string username);
     public event OnReceiveData onSendData;
 
-    private string currentUsername;
-    private string currentId;
+    public string currentUsername;
+    public string currentId;
 
     void Start()
     {
@@ -82,6 +82,8 @@ public class UserOnlineController : MonoBehaviour
         }
         Dictionary<string, object> userDisconnected = (Dictionary<string, object>)args.Snapshot.Value;
 
+        SetUserOffline();
+
         //foreach(GameObject label in mOnline)
         //{
         //    if(label.name == userDisconnected["username"].ToString())
@@ -116,6 +118,7 @@ public class UserOnlineController : MonoBehaviour
     {
         mDatabase.Child("users-online").Child(UserId).Child("username").SetValueAsync(_GameState.username);
     }
+
     private void SetUserOffline()
     {
         mDatabase.Child("users-online").Child(UserId).SetValueAsync(null);
@@ -129,7 +132,5 @@ public class UserOnlineController : MonoBehaviour
     public void SendData()
     {
         onSendData?.Invoke(currentUsername, currentId);
-
-        Debug.Log("Data sent");
     }
 }
