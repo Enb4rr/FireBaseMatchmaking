@@ -11,7 +11,7 @@ public class FriendListController : MonoBehaviour
     GameObject acceptB;
 
     DatabaseReference mDatabase;
-    UserOnlineController mUserOnlineController;
+    public UserOnlineController mUserOnlineController;
     string UserId;
 
     GameState _GameState;
