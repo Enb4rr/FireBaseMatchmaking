@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class UserData
 {
-    public int score;
     public string username;
 
     public string[] friends;

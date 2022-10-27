@@ -100,6 +100,8 @@ public class FriendListController : MonoBehaviour
     private void SendRequest(string id, string username)
     {
         mDatabase.Child("users").Child(id).Child("requestSend").SetValueAsync(_GameState.username);
+
+        Debug.Log("Request Sent");
     }
 
     private void ReceiveRequest(string username)
