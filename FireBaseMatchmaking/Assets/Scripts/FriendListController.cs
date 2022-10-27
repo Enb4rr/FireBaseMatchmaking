@@ -22,6 +22,7 @@ public class FriendListController : MonoBehaviour
         mUserOnlineController = GameObject.Find("Controller").GetComponent<UserOnlineController>();
         _GameState = GameObject.Find("Controller").GetComponent<GameState>();
         _GameState.OnDataReady += InitUsersOnFriendController;
+        _GameState.OnDataReady += InitRequestReceived;
         UserId = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
     }
 
@@ -97,11 +98,11 @@ public class FriendListController : MonoBehaviour
         Debug.Log(userRemovedFromFriendList["username"] + " was removed from your friendlist");
     }
 
-    private void SendRequest(string id, string username)
+    public void SendRequest(string id, string username)
     {
-        mDatabase.Child("users").Child(id).Child("requestSend").SetValueAsync(_GameState.username);
-
         Debug.Log("Request Sent");
+
+        mDatabase.Child("users").Child(id).Child("requestSend").SetValueAsync(_GameState.username);
     }
 
     private void ReceiveRequest(string username)
