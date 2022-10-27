@@ -44,7 +44,7 @@ public class FriendListController : MonoBehaviour
     {
         Debug.Log("Init user friendlist");
 
-        var userFriendList = FirebaseDatabase.DefaultInstance.GetReference("users").Child(UserId).Child("friends");
+        var userFriendList = FirebaseDatabase.DefaultInstance.GetReference("users").Child(UserId).Child("username").Child("friends");
 
         mDatabase.Child("friends").ChildAdded += HandleChildAdded;
         mDatabase.Child("friends").ChildRemoved += HandleChildRemoved;
@@ -52,7 +52,7 @@ public class FriendListController : MonoBehaviour
 
     public void InitRequestReceived()
     {
-        var userRequestList = FirebaseDatabase.DefaultInstance.GetReference("users").Child(UserId).Child("requestReceived");
+        var userRequestList = FirebaseDatabase.DefaultInstance.GetReference("users").Child(UserId).Child("username").Child("requestReceived");
 
         mDatabase.Child("requestReceived").ChildAdded += HandleChildAddedRequest;
         mDatabase.Child("requestReceived").ChildRemoved += HandleChildRemovedRequest;
