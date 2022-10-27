@@ -587,6 +587,7 @@ GameObject:
   - component: {fileID: 407844849}
   - component: {fileID: 407844848}
   - component: {fileID: 407844850}
+  - component: {fileID: 407844851}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -639,6 +640,8 @@ MonoBehaviour:
   addB: {fileID: 8409536894560850671, guid: db0a8d7701a3fe141be81498308f1636, type: 3}
   userOnlineLabelPos: {fileID: 1558027895}
   mainCanva: {fileID: 1752129961}
+  currentUsername: 
+  currentId: 
 --- !u!114 &407844850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -654,6 +657,20 @@ MonoBehaviour:
   matchmakingB: {fileID: 1745526120}
   cancelMatchmakingB: {fileID: 1936042386}
   matchFoundText: {fileID: 2044576894}
+--- !u!114 &407844851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407844846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38c8cc9f891961c499e253d6fdb2237a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acceptB: {fileID: 0}
+  mUserOnlineController: {fileID: 0}
 --- !u!1 &439724257
 GameObject:
   m_ObjectHideFlags: 0
