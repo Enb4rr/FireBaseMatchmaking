@@ -65,6 +65,19 @@ public class MatchmakingController : MonoBehaviour
         }
         Dictionary<string, object> userConnectedToQueue = (Dictionary<string, object>)args.Snapshot.Value;
         Debug.Log(userConnectedToQueue["username"] + " is on a queue");
+
+        if (userConnectedToQueue != null && userConnectedToQueue.Count >= 2)
+        {
+            SetGameMatch();
+            matchFoundText.gameObject.SetActive(true);
+            matchFoundText.text = "match found with: ";
+
+            foreach (var userDoc in userConnectedToQueue)
+            {
+                Dictionary<string, object> userOnQueue = (Dictionary<string, object>)userDoc.Value;
+                matchFoundText.text += " " + userOnQueue["username"].ToString();
+            }
+        }
     }
 
     private void HandleChildRemoved(object sender, ChildChangedEventArgs args)
