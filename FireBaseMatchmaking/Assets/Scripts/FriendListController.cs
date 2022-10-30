@@ -42,8 +42,6 @@ public class FriendListController : MonoBehaviour
 
     public void InitUsersOnFriendController()
     {
-        Debug.Log("Init user friendlist");
-
         var userFriendList = FirebaseDatabase.DefaultInstance.GetReference("users").Child(UserId).Child("username").Child("friends");
 
         mDatabase.Child("friends").ChildAdded += HandleChildAdded;
@@ -93,7 +91,7 @@ public class FriendListController : MonoBehaviour
 
     public void SendRequest(string id, string username)
     {
-        mDatabase.Child("users").Child(id).Child("username").Child("requestSend").SetValueAsync(_GameState.username);
+        mDatabase.Child("users").Child(UserId).Child("username").Child("requestSend").SetValueAsync(username);
     }
 
     private void ReceiveRequest(string username)
