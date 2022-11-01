@@ -25,23 +25,24 @@ public class FriendListController : MonoBehaviour
     private TMP_Text friendText;
 
     DatabaseReference mDatabase;
-    public UserOnlineController mUserOnlineController;
+    UserOnlineController mUserOnlineController;
     string UserId;
 
     GameState _GameState;
 
     private void Awake()
     {
+        mDatabase = FirebaseDatabase.DefaultInstance.RootReference;
+        UserId = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
+
         mUserOnlineController = GameObject.Find("Controller").GetComponent<UserOnlineController>();
         _GameState = GameObject.Find("Controller").GetComponent<GameState>();
     }
 
     private void Start()
     {
-        mDatabase = FirebaseDatabase.DefaultInstance.RootReference;
         _GameState.OnDataReady += InitUsersOnFriendController;
         _GameState.OnDataReady += InitRequestReceived;
-        UserId = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
     }
 
     private void OnEnable()
@@ -58,17 +59,17 @@ public class FriendListController : MonoBehaviour
     {
         var userFriendList = FirebaseDatabase.DefaultInstance.GetReference("users").Child(UserId).Child("friends");
 
-        mDatabase.Child("friends").ChildAdded += HandleChildAdded;
+        mDatabase.Child("friends").ChildAdded += HandleChildAddedFriend;
     }
 
     public void InitRequestReceived()
     {
         var userRequestList = FirebaseDatabase.DefaultInstance.GetReference("users").Child(UserId).Child("requestReceived");
 
-        mDatabase.Child("requestReceived").ChildAdded += HandleChildAddedRequest;
+        mDatabase.Child("requestReceived").ChildAdded += HandleChildAdded;
     }
 
-    private void HandleChildAdded(object sender, ChildChangedEventArgs args)
+    private void HandleChildAddedFriend(object sender, ChildChangedEventArgs args)
     {
         if (args.DatabaseError != null)
         {
@@ -90,7 +91,7 @@ public class FriendListController : MonoBehaviour
         newLabel.name = userAddedToFriendList["username"].ToString();
     }
 
-    private void HandleChildAddedRequest(object sender, ChildChangedEventArgs args)
+    private void HandleChildAdded(object sender, ChildChangedEventArgs args)
     {
         if (args.DatabaseError != null)
         {

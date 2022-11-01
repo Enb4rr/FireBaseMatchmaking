@@ -29,12 +29,13 @@ public class UserOnlineController : MonoBehaviour
 
     public string currentId;
 
-    void Start()
+    private void Awake()
     {
         mDatabase = FirebaseDatabase.DefaultInstance.RootReference;
+        UserId = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
+
         _GameState = GameObject.Find("Controller").GetComponent<GameState>();
         _GameState.OnDataReady += InitUsersOnlineController;
-        UserId = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
     }
 
     public void InitUsersOnlineController()
@@ -54,6 +55,7 @@ public class UserOnlineController : MonoBehaviour
             Debug.LogError(args.DatabaseError.Message);
             return;
         }
+
         Dictionary<string, object> userConnected = (Dictionary<string, object>)args.Snapshot.Value;
 
         //Spawn label and accept button
@@ -68,7 +70,8 @@ public class UserOnlineController : MonoBehaviour
 
         //Add listener to button
 
-        currentId = userConnected["id"].ToString();
+        currentId = _GameState.userId;
+        Debug.Log(currentId);
         Button addButton = newAddButton.GetComponent<Button>();
         addButton.onClick.AddListener(SendData);
 

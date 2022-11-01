@@ -6,7 +6,7 @@ public class UserData
 {
     public string username;
 
-    public string[] friends;
-    public string[] requestSend;
-    public string[] requestReceived;
+    public string friends;
+    public string requestSend;
+    public string requestReceived;
 }
