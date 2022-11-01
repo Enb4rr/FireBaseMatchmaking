@@ -24,10 +24,9 @@ public class UserOnlineController : MonoBehaviour
 
     private List<GameObject> mOnline = new List<GameObject>();
 
-    public delegate void OnReceiveData(string id, string username);
+    public delegate void OnReceiveData(string id);
     public event OnReceiveData onSendData;
 
-    public string currentUsername;
     public string currentId;
 
     void Start()
@@ -69,8 +68,7 @@ public class UserOnlineController : MonoBehaviour
 
         //Add listener to button
 
-        currentUsername = userConnected["username"].ToString();
-        currentId = UserId;
+        currentId = userConnected["id"].ToString();
         Button addButton = newAddButton.GetComponent<Button>();
         addButton.onClick.AddListener(SendData);
 
@@ -89,15 +87,15 @@ public class UserOnlineController : MonoBehaviour
         }
         Dictionary<string, object> userDisconnected = (Dictionary<string, object>)args.Snapshot.Value;
 
-        //foreach (GameObject label in mOnline)
-        //{
-        //    if (label.name == userDisconnected["username"].ToString())
-        //    {
-        //        label.SetActive(false);
-        //    }
-        //}
+        foreach (var label in mOnline)
+        {
+            if (label.name == userDisconnected["username"].ToString())
+            {
+                label.SetActive(false);
+            }
+        }
 
-        //SetUserOffline();
+        SetUserOffline();
     }
 
     private void HandleValueChanged(object sender, ValueChangedEventArgs args)
@@ -138,6 +136,6 @@ public class UserOnlineController : MonoBehaviour
 
     public void SendData()
     {
-        onSendData?.Invoke(currentId, currentUsername);
+        onSendData?.Invoke(currentId);
     }
 }

@@ -99,8 +99,6 @@ public class FriendListController : MonoBehaviour
         }
         Dictionary<string, object> userAddedToRequest = (Dictionary<string, object>)args.Snapshot.Value;
 
-        ReceiveRequest(userAddedToRequest["username"].ToString());
-
         //Spawn label and accept button
 
         var newLabel = Instantiate(requestLabel, new Vector2(userOnlineLabelPos.position.x, userOnlineLabelPos.position.y), Quaternion.identity);
@@ -123,16 +121,11 @@ public class FriendListController : MonoBehaviour
         newLabel.name = userAddedToRequest["username"].ToString();
     }
 
-    public void SendRequest(string id, string username)
+    public void SendRequest(string id)
     {
-        mDatabase.Child("users").Child(UserId).Child("requestSend").SetValueAsync(username);
+        mDatabase.Child("users").Child(UserId).Child("requestSend").SetValueAsync(_GameState.username);
 
-        mDatabase.Child("users").Child(id).Child("requestReceived").SetValueAsync(username);
-    }
-
-    private void ReceiveRequest(string username)
-    {
-        mDatabase.Child("users").Child(UserId).Child("requestReceived").SetValueAsync(username);
+        mDatabase.Child("users").Child(id).Child("requestReceived").SetValueAsync(_GameState.username);
     }
 
     private void AcceptRequest()
