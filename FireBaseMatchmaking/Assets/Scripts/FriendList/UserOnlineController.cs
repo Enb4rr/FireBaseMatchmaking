@@ -47,6 +47,7 @@ public class UserOnlineController : MonoBehaviour
 
         SetUserOnline();
     }
+
     private void HandleChildAdded(object sender, ChildChangedEventArgs args)
     {
         if (args.DatabaseError != null)
@@ -56,6 +57,8 @@ public class UserOnlineController : MonoBehaviour
         }
         Dictionary<string, object> userConnected = (Dictionary<string, object>)args.Snapshot.Value;
 
+        //Spawn label and accept button
+
         var newLabel = Instantiate(friendLabel, new Vector2(userOnlineLabelPos.position.x, userOnlineLabelPos.position.y), Quaternion.identity);
         newLabel.transform.parent = mainCanva.transform;
         friendLabelText = newLabel.GetComponent<TMP_Text>();
@@ -64,10 +67,14 @@ public class UserOnlineController : MonoBehaviour
         var newAddButton = Instantiate(addB, new Vector2(userOnlineLabelPos.position.x + 250, userOnlineLabelPos.position.y), Quaternion.identity);
         newAddButton.transform.parent = mainCanva.transform;
 
+        //Add listener to button
+
         currentUsername = userConnected["username"].ToString();
         currentId = UserId;
         Button addButton = newAddButton.GetComponent<Button>();
         addButton.onClick.AddListener(SendData);
+
+        //Reset label position for new labels
 
         userOnlineLabelPos.position = new Vector2(newLabel.transform.position.x, newLabel.transform.position.y - 90);
         newLabel.name = userConnected["username"].ToString();
@@ -82,15 +89,15 @@ public class UserOnlineController : MonoBehaviour
         }
         Dictionary<string, object> userDisconnected = (Dictionary<string, object>)args.Snapshot.Value;
 
-        SetUserOffline();
+        foreach (GameObject label in mOnline)
+        {
+            if (label.name == userDisconnected["username"].ToString())
+            {
+                label.SetActive(false);
+            }
+        }
 
-        //foreach(GameObject label in mOnline)
-        //{
-        //    if(label.name == userDisconnected["username"].ToString())
-        //    {
-        //        //label.SetActive(false);
-        //    }
-        //}
+        SetUserOffline();
     }
 
     private void HandleValueChanged(object sender, ValueChangedEventArgs args)
