@@ -106,7 +106,15 @@ public class AuthController : MonoBehaviour
                 }
                 else
                 {
-                    _alertText.text = null;
+                    Debug.Log("Succesfully registered user");
+
+                    UserData data = new UserData();
+
+                    data.username = GameObject.Find("RegisterUsernameField").GetComponent<TMP_InputField>().text;
+                    string json = JsonUtility.ToJson(data);
+
+                    FirebaseDatabase.DefaultInstance.RootReference.Child("users").Child(registerTask.Result.UserId).SetRawJsonValueAsync(json);
+
                     UpdateStatus(true);
                     SceneManager.LoadScene(1);
                 }
@@ -116,7 +124,7 @@ public class AuthController : MonoBehaviour
 
     public void UpdateStatus(bool isOnline)
     {
-        StartCoroutine(isOnline ? SetOnline() : SetOffline());
+        StartCoroutine(isOnline? SetOnline() : SetOffline());
     }
 
     IEnumerator SetOnline()

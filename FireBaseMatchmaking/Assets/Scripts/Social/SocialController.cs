@@ -4,12 +4,15 @@ using Firebase.Database;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SocialController : MonoBehaviour
 {
     private static SocialController instance;
     [SerializeField] Transform onlineSpawn, friendSpawn, requestSpawn;
     [SerializeField] GameObject onlinePrefab, friendPrefab, requestPrefab;
+
+    TMP_Text text;
 
     private void Awake()
     {
@@ -44,9 +47,10 @@ public class SocialController : MonoBehaviour
                 if (item.Key == AuthController.User.UserId)
                 {
                     var userInstance = Instantiate(onlinePrefab, onlineSpawn);
-                    var userInstanceText = userInstance.GetComponent<TMP_Text>().text;
-                    userInstanceText = item.Value.ToString();
-                    userInstance.transform.GetChild(1).gameObject.SetActive(false);
+                    text = userInstance.GetComponent<TMP_Text>();
+                    text.text = item.Value.ToString();
+
+                    userInstance.transform.GetChild(0).gameObject.SetActive(false);
                     userInstance.name = item.Key;
                 }
                 else
@@ -59,8 +63,8 @@ public class SocialController : MonoBehaviour
                             userInstance.transform.GetChild(0).gameObject.SetActive(false);
                         }
                     }
-                    var userInstanceText = userInstance.GetComponent<TMP_Text>().text;
-                    userInstanceText = item.Value.ToString();
+                    text = userInstance.GetComponent<TMP_Text>();
+                    text.text = item.Value.ToString();
                     userInstance.name = item.Key;
                 }
             }
@@ -83,8 +87,8 @@ public class SocialController : MonoBehaviour
             foreach (var item in currentFriends)
             {
                 var friendInstance = Instantiate(friendPrefab, friendSpawn);
-                var friendInstanceText = friendInstance.GetComponent<TMP_Text>().text;
-                friendInstanceText = item.Value.ToString();
+                text = friendInstance.GetComponent<TMP_Text>();
+                text.text = item.Value.ToString();
                 friendInstance.name = item.Key;
             }
         }
@@ -115,8 +119,8 @@ public class SocialController : MonoBehaviour
             foreach (var item in currentRequest)
             {
                 var requestInstance = Instantiate(requestPrefab, requestSpawn);
-                var requestInstanceText = requestInstance.GetComponent<TMP_Text>().text;
-                requestInstanceText = item.Value.ToString();
+                text = requestInstance.GetComponent<TMP_Text>();
+                text.text = item.Value.ToString();
                 requestInstance.name = item.Key;
             }
         }
@@ -130,6 +134,13 @@ public class SocialController : MonoBehaviour
     }
 
     public void LogoutUser()
+    {
+        AuthController.instance.UpdateStatus(false);
+        AuthController.instance.auth.SignOut();
+        SceneManager.LoadScene(0);
+    }
+
+    private void OnApplicationQuit()
     {
         AuthController.instance.UpdateStatus(false);
         AuthController.instance.auth.SignOut();
