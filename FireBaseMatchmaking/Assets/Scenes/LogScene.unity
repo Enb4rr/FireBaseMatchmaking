@@ -750,7 +750,6 @@ GameObject:
   - component: {fileID: 191738628}
   - component: {fileID: 191738627}
   - component: {fileID: 191738626}
-  - component: {fileID: 191738629}
   m_Layer: 5
   m_Name: LogInAccountB
   m_TagString: Untagged
@@ -822,7 +821,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 191738627}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 525441572}
+        m_TargetAssemblyTypeName: AuthController, Assembly-CSharp
+        m_MethodName: LoginButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &191738627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -861,20 +872,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 191738624}
   m_CullTransparentMesh: 1
---- !u!114 &191738629
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 191738624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94dc1f6a7cf21054bb611da5092cda48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _loginButton: {fileID: 191738626}
-  _alertText: {fileID: 486041299}
 --- !u!1 &306961454
 GameObject:
   m_ObjectHideFlags: 0
@@ -1847,7 +1844,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 525441569}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 503.8271, y: 227.08356, z: 5.3135204}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1863,10 +1860,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 525441569}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be166d01e62a0784389adf89ddb8baf5, type: 3}
+  m_Script: {fileID: 11500000, guid: 4db90938dd737494db3d8c1ce867c0ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneToLoad: MainScene
+  emailLogin: {fileID: 656979742}
+  passwordLogin: {fileID: 378201378}
+  usernameRegister: {fileID: 1728110138}
+  emailRegister: {fileID: 530044156}
+  passwordRegister: {fileID: 1108368140}
+  _alertText: {fileID: 486041299}
 --- !u!1 &530044154
 GameObject:
   m_ObjectHideFlags: 0
@@ -4909,7 +4911,6 @@ GameObject:
   - component: {fileID: 1871146892}
   - component: {fileID: 1871146891}
   - component: {fileID: 1871146890}
-  - component: {fileID: 1871146893}
   m_Layer: 5
   m_Name: RegisterAccountB
   m_TagString: Untagged
@@ -4981,7 +4982,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1871146891}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 525441572}
+        m_TargetAssemblyTypeName: AuthController, Assembly-CSharp
+        m_MethodName: RegisterButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1871146891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5020,20 +5033,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1871146888}
   m_CullTransparentMesh: 1
---- !u!114 &1871146893
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1871146888}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bbb755d1b24c2848bdcc6c8763113ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _registrationButton: {fileID: 1871146890}
-  _alertText: {fileID: 486041299}
 --- !u!1 &2062894279
 GameObject:
   m_ObjectHideFlags: 0
