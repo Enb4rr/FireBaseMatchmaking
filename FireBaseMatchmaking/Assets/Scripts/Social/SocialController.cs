@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Firebase.Database;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -52,6 +53,8 @@ public class SocialController : MonoBehaviour
 
                     userInstance.transform.GetChild(0).gameObject.SetActive(false);
                     userInstance.name = item.Key;
+
+                    //onlineSpawn.position = new Vector2(userInstance.transform.position.x, userInstance.transform.position.y - 80);
                 }
                 else
                 {
@@ -66,6 +69,9 @@ public class SocialController : MonoBehaviour
                     text = userInstance.GetComponent<TMP_Text>();
                     text.text = item.Value.ToString();
                     userInstance.name = item.Key;
+                    userInstance.transform.GetChild(0).name = item.Key;
+
+                    //onlineSpawn.position = new Vector2(userInstance.transform.position.x, userInstance.transform.position.y - 80);
                 }
             }
         }
@@ -73,6 +79,7 @@ public class SocialController : MonoBehaviour
 
     void InstantiteFriends(object sender, ValueChangedEventArgs args)
     {
+        Debug.Log("Instantiate Friends");
         if (args.DatabaseError != null)
         {
             Debug.LogError(args.DatabaseError.Message);
@@ -90,6 +97,8 @@ public class SocialController : MonoBehaviour
                 text = friendInstance.GetComponent<TMP_Text>();
                 text.text = item.Value.ToString();
                 friendInstance.name = item.Key;
+
+                //friendSpawn.position = new Vector2(friendInstance.transform.position.x, friendInstance.transform.position.y - 80);
             }
         }
         else
@@ -103,6 +112,7 @@ public class SocialController : MonoBehaviour
 
     void InstantiteFriendRequest(object sender, ValueChangedEventArgs args)
     {
+        Debug.Log("Instantiate Friends Requests");
         if (args.DatabaseError != null)
         {
             Debug.LogError(args.DatabaseError.Message);
@@ -122,6 +132,8 @@ public class SocialController : MonoBehaviour
                 text = requestInstance.GetComponent<TMP_Text>();
                 text.text = item.Value.ToString();
                 requestInstance.name = item.Key;
+
+                //requestSpawn.position = new Vector2(requestInstance.transform.position.x, requestInstance.transform.position.y - 80);
             }
         }
         else
