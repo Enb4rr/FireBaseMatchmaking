@@ -59,7 +59,6 @@ public class FriendListController : MonoBehaviour
         var userFriendList = FirebaseDatabase.DefaultInstance.GetReference("users").Child(UserId).Child("friends");
 
         mDatabase.Child("friends").ChildAdded += HandleChildAdded;
-        mDatabase.Child("friends").ChildRemoved += HandleChildRemoved;
     }
 
     public void InitRequestReceived()
@@ -89,17 +88,6 @@ public class FriendListController : MonoBehaviour
 
         friendLabelPos.position = new Vector2(newLabel.transform.position.x, newLabel.transform.position.y - 90);
         newLabel.name = userAddedToFriendList["username"].ToString();
-    }
-
-    private void HandleChildRemoved(object sender, ChildChangedEventArgs args)
-    {
-        if (args.DatabaseError != null)
-        {
-            Debug.LogError(args.DatabaseError.Message);
-            return;
-        }
-        Dictionary<string, object> userRemovedFromFriendList = (Dictionary<string, object>)args.Snapshot.Value;
-        Debug.Log(userRemovedFromFriendList["username"] + " was removed from your friendlist");
     }
 
     private void HandleChildAddedRequest(object sender, ChildChangedEventArgs args)
@@ -138,6 +126,8 @@ public class FriendListController : MonoBehaviour
     public void SendRequest(string id, string username)
     {
         mDatabase.Child("users").Child(UserId).Child("requestSend").SetValueAsync(username);
+
+        mDatabase.Child("users").Child(id).Child("requestReceived").SetValueAsync(username);
     }
 
     private void ReceiveRequest(string username)
